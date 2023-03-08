@@ -1,0 +1,68 @@
+---
+title: "Untitled"
+output: html_document
+date: "2023-03-08"
+---
+
+```{r setup, include=FALSE}
+setwd("~/final project")
+list.files("~/final project")
+growth = read.csv("totalseedgrowth.csv")
+head(growth)
+speciestreatment = paste(growth$species, growth$treatment)
+growth = cbind(growth, speciestreatment)
+library(ggplot2)
+as.numeric(growth2$height..cm.)
+as.numeric(growth2$leaf.number)
+transform(growth2, as.numeric(growth2$height..cm.), as.numeric(growth2$leaf.number))
+head(growth2)
+sapply(growth2, class)
+
+aggregate(growth[,7:8], list(growth$speciestreatment), mean, na.action = na.omit)
+
+ggplot(growth, aes(x = week, y = height..cm., group = speciestreatment, color = speciestreatment)) +
+  geom_line(stat="summary", fun = mean, size = 1.5) + theme_bw()
+
+ggplot(growth, aes(x = week, y = leaf.number, group = speciestreatment, color = speciestreatment)) +
+  geom_line(stat="summary", fun = mean, size = 1.5) + theme_bw()
+
+```
+
+
+```{r}
+setwd("~/final project")
+massleaf = read.csv("biomassLA.csv")
+
+speciestreatment = paste(massleaf$species, massleaf$treatment)
+ml = cbind(massleaf, speciestreatment)
+head(ml)
+transform(ml, as.character(ml$chort))
+rsratio = ml$root.dry.biomass..g./ml$shoot.dry.biomass
+ml = cbind(ml, rsratio)
+sapply(ml, class)
+#higher rs ratio = more roots vs shoot, lower = less roots vs shoot
+
+c1 = subset(ml, chort == 1)
+c2 = subset(ml, chort == 2)
+c3 = subset(ml, chort == 3)
+head(c1)
+
+library(ggplot2)
+par(2,2)
+ggplot(ml, aes(x = chort, y = rsratio, group = speciestreatment, fill = speciestreatment)) + 
+  geom_bar(position = "dodge", stat = "summary", fun = mean, width = 0.5) + theme_bw()
+
+ggplot(c1, aes(x = speciestreatment, y = shoot.fresh.biomass, fill = speciestreatment)) + 
+  geom_bar(position = "dodge", stat = "summary", fun = mean, width = 0.5) +
+  theme_bw()
+
+ggplot(c2, aes(x = speciestreatment, y = shoot.fresh.biomass, fill = speciestreatment)) + 
+  geom_bar(position = "dodge", stat = "summary", fun = mean, width = 0.5) +
+  theme_bw()
+
+ggplot(c3, aes(x = speciestreatment, y = shoot.fresh.biomass, fill = speciestreatment)) + 
+  geom_bar(position = "dodge", stat = "summary", fun = mean, width = 0.5) +
+  theme_bw()
+
+```
+
